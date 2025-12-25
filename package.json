@@ -1,0 +1,36 @@
+{
+  "name": "vgcp-mcp-server",
+  "version": "1.0.0",
+  "description": "Verifiable Graph Context Protocol MCP Server - DAG-structured reasoning with constraint verification",
+  "type": "module",
+  "bin": {
+    "vgcp-server": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "./node_modules/.bin/tsc && chmod +x build/index.js",
+    "watch": "tsc --watch",
+    "start": "node build/index.js",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "mcp",
+    "ai",
+    "reasoning",
+    "dag",
+    "verification",
+    "graph"
+  ],
+  "author": "Ty",
+  "license": "MIT"
+}
