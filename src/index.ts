@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
  * VGCP MCP Server - Verifiable Graph Context Protocol
- * 
+ *
  * A Model Context Protocol server that provides DAG-structured reasoning
  * with constraint verification. Implements the Constraint Crystallization
  * Principle: ⧬∞ ⦿ ⫰ ∂ → ⧈
- * 
+ *
  * Tools:
  *   - propose_thought: Add a verified node to the reasoning graph
  *   - get_context: Retrieve causal ancestors for a node
@@ -48,7 +48,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: "propose_thought",
         description: `Propose a new thought node to the reasoning graph. The Graph Kernel (∂) will validate constraints before committing.
-        
+
 Node Types:
 - PREMISE: Axiom, fact, or retrieved data (can be root)
 - WARRANT: Intermediate reasoning step
@@ -64,9 +64,9 @@ Constraints enforced:
 - Acyclicity: Graph must remain a DAG`,
         inputSchema: {
           type: "object",
-          required: ["type", "content"],
+          required: ["thoughtType", "content"],
           properties: {
-            type: {
+            thoughtType: {
               type: "string",
               enum: Object.values(NodeType),
               description: "The type of thought node"
@@ -82,7 +82,7 @@ Constraints enforced:
             },
             edgeTypes: {
               type: "array",
-              items: { 
+              items: {
                 type: "string",
                 enum: Object.values(EdgeType)
               },
@@ -184,14 +184,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
   switch (name) {
     case "propose_thought": {
-      const { type, content, parentIds = [], edgeTypes } = args as {
-        type: string;
+      const { thoughtType, content, parentIds = [], edgeTypes } = args as {
+        thoughtType: string;
         content: string;
         parentIds?: string[];
         edgeTypes?: string[];
       };
 
-      const nodeType = type as NodeType;
+      const nodeType = thoughtType as NodeType;
       const edgeTypesParsed = edgeTypes?.map(e => e as EdgeType);
 
       const { node, result } = kernel.proposeThought({
